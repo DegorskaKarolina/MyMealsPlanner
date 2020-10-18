@@ -1,0 +1,40 @@
+﻿<div>
+    <h5>Składniki:</h5>
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label>Nazwa:</label>
+            <InputText class="form-control" @bind-Value="@Ingredient.Name" />
+        </div>
+        <div class="form-group col-sm-3">
+            <label>Ilość :</label>
+            <InputText class="form-control" @bind-Value="@Ingredient.Quantity" />
+        </div>
+        <div class="col-sm-3" style=" text-align: center; margin-top: 1.5em; ">
+            <button type="submit" class="btn btn-success" @onclick="OnAddToList"> Dodaj </button>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Ilość</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ingredient in Ingredients)
+            {
+                <tr>
+                    <td>@ingredient.Name</td>
+                    <td>@ingredient.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    [Parameter] public List<Ingredient> Ingredients { get; set; }
+    [Parameter] public EventCallback OnAddToList { get; set; }
+    [Parameter] public Ingredient Ingredient { get; set; }
+}

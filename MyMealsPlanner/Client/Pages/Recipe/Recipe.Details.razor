@@ -1,0 +1,53 @@
+@page "/recipe/{recipeId}"
+@inject HttpClient Http
+
+@if (Recipe == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h1> @Recipe.Name</h1>
+    <hr />
+    <div class="row">
+        <div class="col-11">
+            <a href="/recipe/list"> <i class="oi oi-arrow-left"></i> Wróć</a>
+        </div>
+        <div class="form-group col-1">
+            <a href="recipe/edit/@Recipe.Id"><i class="oi oi-pencil"></i> Edytuj</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <h4>Składniki</h4>
+            @foreach (var ingredient in Recipe.Ingredients)
+            {
+                <div class="row">
+                    <div class="col-sm-3">
+                        @ingredient.Quantity
+                    </div>
+                    <div class="col-sm-9">
+                        @ingredient.Name
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-sm-9">
+            <h4>Opis</h4>
+            <p> @Recipe.Description</p>
+        </div>
+    </div>
+
+}
+
+@code {
+    [Parameter]
+    public string RecipeId { get; set; }
+
+    protected Recipe Recipe;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Recipe = await Http.GetFromJsonAsync<Recipe>($"api/recipe/{RecipeId}");
+    }
+}

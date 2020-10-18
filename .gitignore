@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/MyMealsPlanner_v4
+/MyMealsPlanner/Client/obj
+/MyMealsPlanner/Server/obj
+/MyMealsPlanner/Shared/obj/Debug/netstandard2.1
+/MyMealsPlanner/Shared/obj
+/MyMealsPlanner/Server/appsettings.json
+/MyMealsPlanner/Server/appsettings.Development.json

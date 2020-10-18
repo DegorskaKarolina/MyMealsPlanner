@@ -1,0 +1,42 @@
+@page "/recipe/list"
+@inject HttpClient Http
+@inject IJSRuntime js
+
+<h1>Przepisy</h1>
+<hr />
+<div class="form-group">
+    <a class="btn btn-success" href="recipe/create"><i class="oi oi-plus"></i> Dodaj nowy przepis</a>
+</div>
+@if (Recipes == null)
+{
+    <p><em>Ładowanie...</em></p>
+}
+else
+{
+    <div class="row">
+        @foreach (var recipe in Recipes)
+        {
+            <div class="col-lg-3">
+                <a href="/recipe/@recipe.Id">
+                    <img class="card-img-top" src="../images/food.jpg" alt="Card image cap">
+                </a>
+                <div class="card-body" style="text-align: center; ">
+                    <span>
+                        <a class="card-text" src="../images/food.jpg">@recipe.Name</a>
+                    </span>
+                </div>
+            </div>
+
+        }
+    </div>
+}
+
+@code {
+    protected Recipe[] Recipes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Recipes = await Http.GetFromJsonAsync<Recipe[]>("api/recipe");
+    }
+
+}

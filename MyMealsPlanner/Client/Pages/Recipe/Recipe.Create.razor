@@ -1,0 +1,17 @@
+@page "/recipe/create"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+
+<h3>Dodaj nowy przepis</h3>
+<hr />
+<RecipeForm ButtonText="Dodaj przepis" recipe="@recipe"  OnValidSubmit="@CreateRecipe" />
+
+@code {
+    Recipe recipe = new Recipe();
+
+    async Task CreateRecipe()
+    {
+        await http.PostAsJsonAsync("api/recipe", recipe);
+        uriHelper.NavigateTo("recipe/list");
+    }
+}

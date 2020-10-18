@@ -1,0 +1,25 @@
+@page "/recipe/edit/{recipeId}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+
+<h3>Edytuj przepis</h3>
+<hr />
+<RecipeForm ButtonText="Zapisz zmiany" recipe="@recipe" OnValidSubmit="@UpdateRecipe" />
+
+@code {
+    [Parameter]
+    public string RecipeId { get; set; }
+
+    Recipe recipe = new Recipe();
+
+    protected override async Task OnInitializedAsync()
+    {
+        recipe = await http.GetFromJsonAsync<Recipe>($"api/recipe/{RecipeId}");
+    }
+
+    async Task UpdateRecipe()
+    {
+        await http.PutAsJsonAsync($"api/recipe/{recipe.Id}", recipe);
+        uriHelper.NavigateTo("recipe/list");
+    }
+}
